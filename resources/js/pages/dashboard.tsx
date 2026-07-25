@@ -13,9 +13,13 @@ export default function Dashboard() {
         price: '',
         stock: '',
     });
-    function submit(event: React.FormEvent<HTMLFormElement>) {
+    function submit (event: React.FormEvent<HTMLFormElement>) {
         event.preventDefault();
-        form.post('/products');
+        form.post('/products', {
+            onSuccess: () => {
+                form.reset();
+            },
+        });
     }
     return (
         <>
@@ -27,7 +31,7 @@ export default function Dashboard() {
                     Add a new product
                 </p>
                 </div>
-                <form className="max-w-xl space-y-4 rounded-xl border p-4">
+                <form onSubmit={submit} className="max-w-xl space-y-4 rounded-xl border p-4">
                     <div className="space-y-2">
                         <label htmlFor="name">Name</label>
                         <Input id="name" value={form.data.name} 
